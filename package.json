@@ -1,0 +1,26 @@
+{
+  "name": "makeshift-cdn",
+  "version": "1.0.0",
+  "description": "A small CDN that can be self hosted to provide content delivery for your own needs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [
+    "express",
+    "CDN",
+    "content",
+    "delivery",
+    "expressjs",
+    "nodejs",
+    "node.js",
+    "express.js"
+  ],
+  "author": "Christian Harjuno (SorataBaka)",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.4",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  }
+}
