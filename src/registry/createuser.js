@@ -65,12 +65,21 @@ module.exports = async(req, res) =>{
             upsert: true
         }).then((data, error) => {
             if(error){
-                console.log(error)
-                return saveDatabse()
+                const targetpath = __dirname + `/../../data/`
+                const dirpath = path.resolve(`${targetpath}${id}`)
+                if(!fs.existsSync(dirpath)){
+                    fs.rmdirSync(dirpath, {recursive})
+                }
+                return res.json({
+                    Status: 500,
+                    Message: "Failed to register",
+                    Description: "Failed to create a new user and store to database"
+                })
             }
             return res.json({
                 Status: 200,
-                Message: "Successfully created a new user. Please save the information below. You can use the token to perform actions later on. The id is used to identify your account while the username and password can be used to retrieve your id and token.",
+                Message: "Successfully registered",
+                Description: "Successfully created a new user. Please save the information below. You can use the token to perform actions later on. The id is used to identify your account while the username and password can be used to retrieve your id and token.",
                 Data: {
                     username: username,
                     id: id,
