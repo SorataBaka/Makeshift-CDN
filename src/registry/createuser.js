@@ -32,9 +32,10 @@ module.exports = async(req, res) =>{
     const generate = async() => {
         var id = await nanoid(10)
         var token = await nanoid(20)
-        const dirpath = path.resolve(__dirname + `/../../data/${id}`)
-        const sourcepath = path.resolve(__dirname + `/../../data/${id}/source`)
-        const buildpath = path.resolce(__dirname + `/../../data/${id}/build`)
+        const targetpath = __dirname + `/../../data/`
+        const dirpath = path.resolve(`${targetpath}${id}`)
+        const sourcepath = path.resolve(`${dirpath}/source`)
+        const buildpath = path.resolve(`${dirpath}/build`)
         if(!fs.existsSync(dirpath)){
             fs.mkdirSync(dirpath)
             fs.mkdirSync(sourcepath)
