@@ -9,6 +9,7 @@ const userData = require(__dirname + '/../../schema/userInfo.js')
 const { nanoid } = require("nanoid/async")
 const fs = require("fs")
 const path = require("path")
+const encrypt = require(__dirname + "/../../utils/sha256encrypt.js")
 
 module.exports = async(req, res) =>{
     const { headers } = req
@@ -22,7 +23,7 @@ module.exports = async(req, res) =>{
     const password = headers.password
     
     //verify if username already exists
-    const verify = await userData.find({username: username})
+    const verify = await userData.find({username: encrypt(username)})
     if(verify.length != 0) return res.json({
         Status: 401,
         Message: "Username taken",
@@ -52,13 +53,13 @@ module.exports = async(req, res) =>{
     //save generated id and token to the database
     const saveDatabase = async() => {
         await userData.findOneAndUpdate({
-            username: username,
-            password: password,
+            username: encrypt(username),
+            password: encrypt(password),
             id: id,
             token: token,
         },{
-            username: username,
-            password: password,
+            username: encrypt(username),
+            password: encrypt(password),
             id: id,
             token: token,
         },{
