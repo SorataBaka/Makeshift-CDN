@@ -36,11 +36,11 @@ module.exports = async(req, res) =>{
         const targetpath = __dirname + `/../../data/`
         const dirpath = path.resolve(`${targetpath}${id}`)
         const sourcepath = path.resolve(`${dirpath}/source`)
-        const buildpath = path.resolve(`${dirpath}/build`)
+        //const buildpath = path.resolve(`${dirpath}/build`)
         if(!fs.existsSync(dirpath)){
             fs.mkdirSync(dirpath)
             fs.mkdirSync(sourcepath)
-            fs.mkdirSync(buildpath)
+            //fs.mkdirSync(buildpath)
             return {
                 id,
                 token

@@ -6,5 +6,5 @@ router.get("/register", require("./registry/getuserinfo.js"))
 router.post("/register", require("./registry/createuser.js"))
 router.delete("/register", require("./registry/deleteuser.js"))
 
-
+router.post("/upload/:filename", require("./upload/upload.js"))
 module.exports = router
