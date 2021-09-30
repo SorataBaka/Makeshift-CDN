@@ -6,6 +6,9 @@ router.get("/register", require("./registry/getuserinfo.js"))
 router.post("/register", require("./registry/createuser.js"))
 router.delete("/register", require("./registry/deleteuser.js"))
 
-router.use("/update", updateRouter)
-updateRouter.post("/token", require("./update/updatetoken.js"))
+<<<<<<< HEAD
+
+=======
+router.post("/upload/:filename", require("./upload/upload.js"))
+>>>>>>> 5e6e5420af8106ae816478175a5d6b62e3085cd8
 module.exports = router
