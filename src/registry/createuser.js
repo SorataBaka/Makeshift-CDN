@@ -35,11 +35,9 @@ module.exports = async(req, res) =>{
         var token = await nanoid(20)
         const targetpath = __dirname + `/../../data/`
         const dirpath = path.resolve(`${targetpath}${id}`)
-        const sourcepath = path.resolve(`${dirpath}/source`)
         //const buildpath = path.resolve(`${dirpath}/build`)
         if(!fs.existsSync(dirpath)){
             fs.mkdirSync(dirpath)
-            fs.mkdirSync(sourcepath)
             //fs.mkdirSync(buildpath)
             return {
                 id,

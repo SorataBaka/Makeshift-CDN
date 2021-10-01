@@ -6,6 +6,15 @@ module.exports = async(req, res) =>{
     const { headers } = req
     const username = headers.username
     const password = headers.password
+    if(!username || !password){
+        res.status = 400
+        return res.json({
+            Status: 400,
+            Message : "Invalid headers"
+        })
+    }
+
+
     const userHash = await encryptUser(username)
 
     const query = await userData.find({username: userHash})

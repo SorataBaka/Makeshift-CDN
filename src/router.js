@@ -16,4 +16,9 @@ updateRouter.post("/token", require("./update/updatetoken.js"))
 router.all("/upload", require("./upload/baseupload.js"))
 router.post("/upload/single", upload.single('content'), require("./upload/uploadsingle.js"))
 
+
+router.get("/file", require("./file/baseretrieve.js"))
+router.get("/file/:id", require("./file/retrieveFileList.js"))
+router.get("/file/:id/:filename", require("./file/retrieveFile.js"))
+
 module.exports = router
