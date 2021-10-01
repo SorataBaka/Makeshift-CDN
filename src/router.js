@@ -20,5 +20,5 @@ router.post("/upload/single", upload.single('content'), require("./upload/upload
 router.get("/file", require("./file/baseretrieve.js"))
 router.get("/file/:id", require("./file/retrieveFileList.js"))
 router.get("/file/:id/:filename", require("./file/retrieveFile.js"))
-
+router.delete("/file/:id/:filename", require("./file/deleteFile.js"))
 module.exports = router

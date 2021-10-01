@@ -15,11 +15,12 @@ if(!process.env.URI && !process.env.PORT){
 
 
 const router = require("./src/router.js")
+const clearTemp = require("./utils/clearTemp.js")
+const clearDatabase = require("./utils/cleanDatabase.js")
 
 app.use(express.json())
 app.use(morgan("dev"))
 app.use("/", router)
-
 
 app.all('/', (req, res) => {
     return res.json({
@@ -40,3 +41,8 @@ app.listen(PORT, async() =>{
     await connectMongoose()
 })
 
+setInterval(() => {
+    clearTemp()
+    clearDatabase()
+    return console.log("Cleared cache")
+}, 6000000)
