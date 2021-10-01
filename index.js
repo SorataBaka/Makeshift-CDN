@@ -1,7 +1,11 @@
 const express = require('express');
 const morgan = require('morgan');
+const fs = require("fs")
 require("dotenv").config()
+
 const app = new express();
+//const upload = new multer()
+
 
 //check if required env's are available
 if(!process.env.URI && !process.env.PORT){
@@ -24,6 +28,11 @@ app.all('/', (req, res) => {
     })
 })
 const connectMongoose = require("./utils/mongooseconnect.js")
+
+if(!fs.existsSync("./data") || !fs.existsSync("./data/temp")){
+    fs.mkdir("./data/temp")
+}
+
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, async() =>{
