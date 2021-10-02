@@ -15,8 +15,40 @@ module.exports = async(req, res)=>{
   const fileName = req.file.originalname
   //-----------------------------------------------------------------------------------------------------------------------------------
   //Do checks to see if user exists and data may be written
+  var Allowed = true
+  const fileExtensionArray = fileName.split(".")
+  const fileExtension = fileExtensionArray[fileExtensionArray.length - 1]
+  const restrictedJSON = JSON.parse(fs.readFileSync(path.resolve(__dirname + `/../../restrictedFile.json`)))
+  restrictedJSON.forEach(extension => {
+    if(fileExtension.toUpperCase() == extension){
+      Allowed = false
+    }
+  })
+  if(!Allowed){
+    res.status = 401
+    fs.rmSync(req.file.path)
+    return res.json({
+      Status: 401,
+      Message: "Unauthorized file extension",
+      Content: {
+        fileName: fileName,
+        extension: fileExtension,
+        fileType: req.file.mimetype,
+        size: req.file.size
+      }
+    })
+  }
+  if(req.file.size > 2000000){
+    res.status = 401
+    fs.rmSync(req.file.path)
+    return res.json({
+      Status: 400,
+      Message: "File too big"
+    })
+  }
   if(!token || !fileName){
     res.status = 400
+    fs.rmSync(req.file.path)
     return res.json({
       Status: 400,
       Message: "Please provide a token"
@@ -25,6 +57,7 @@ module.exports = async(req, res)=>{
   const query = await userData.find({token: token})
   if(query.length == 0){
     res.status = 400
+    fs.rmSync(req.file.path)
     return res.json({
       Status: 400,
       Message: "Token invalid"
@@ -34,6 +67,7 @@ module.exports = async(req, res)=>{
   const folderPath = path.resolve(__dirname + `/../../data/${id}`)
   if(!fs.existsSync(folderPath)){
     res.status = 404
+    fs.rmSync(req.file.path)
     await userData.findOneAndDelete({token: token})
     return res.json({
       Status : 404,
@@ -42,6 +76,7 @@ module.exports = async(req, res)=>{
   }
   if(fs.existsSync(__dirname + `/../../data/${id}/${fileName}`)){
     res.status = 400
+    fs.rmSync(req.file.path)
     return res.json({
       Status: 400,
       Message: "File name already exists"
@@ -62,7 +97,8 @@ module.exports = async(req, res)=>{
       Content: {
         fileName: fileName,
         fileType: req.file.mimetype,
-        size: req.file.size
+        size: req.file.size,
+        path: `/file/${id}/${fileName}`
       }
     })
   }

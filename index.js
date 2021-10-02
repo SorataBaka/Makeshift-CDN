@@ -9,7 +9,7 @@ const app = new express();
 //check if required env's are available
 if(!process.env["URI"] && !process.env['PORT']){
     console.log("Please provide a mongoDB URI and running PORT")
-    process.exit(1)
+    process.exit(-1)
 }
 
 
@@ -34,7 +34,10 @@ const connectMongoose = require("./utils/mongooseconnect.js")
 if(!fs.existsSync("./data") || !fs.existsSync("./data/temp")){
     fs.mkdir("./data/temp")
 }
-
+if(!fs.existsSync("./restrictedFile.json")){
+    console.log("No file restriction JSON provided. Aborting startup.")
+    process.exit(-1)
+}
 
 const PORT = process.env["PORT"] || 3000
 app.listen(PORT, async() =>{
