@@ -17,10 +17,12 @@ if(write?.toLowerCase() == "true"){
 
     router.all("/upload", require("./upload/baseupload.js"))
     router.post("/upload/single", upload.single('content'), require("./upload/uploadsingle.js"))
+    router.delete("/file/:id/:filename", require("./file/deleteFile.js"))
+    
 }
+
 
 router.get("/file", require("./file/baseretrieve.js"))
 router.get("/file/:id", require("./file/retrieveFileList.js"))
 router.get("/file/:id/:filename", require("./file/retrieveFiles.js"))
-router.delete("/file/:id/:filename", require("./file/deleteFile.js"))
 module.exports = router
