@@ -1,12 +1,11 @@
 const express = require('express');
 const morgan = require('morgan');
+const compression = require("compression")
+const bodyParser = require("body-parser")
 const fs = require("fs")
 require("dotenv").config()
 
 const app = new express();
-//const upload = new multer()
-
-
 //check if required env's are available
 if(!process.env.URI && !process.env.PORT){
     console.log("Please provide a mongoDB URI and running PORT")
@@ -19,6 +18,8 @@ const clearTemp = require("./utils/clearTemp.js")
 const clearDatabase = require("./utils/cleanDatabase.js")
 
 app.use(express.json())
+app.use(compression())
+app.use(bodyParser.raw())
 app.use(morgan("dev"))
 app.use("/", router)
 

@@ -4,9 +4,9 @@ const userData = require(__dirname + `/../../schema/userInfo.js`)
 const {comparePassword, encryptUser} = require(__dirname + `/../../utils/encryption.js`)
 
 module.exports = async(req, res) => {
-    const { headers } = req
-    const username = headers.username
-    const password = headers.password
+    const { body } = req
+    const username = body.username
+    const password = body.password
     const userHash = await encryptUser(username)
 
     const query = await userData.find({username: userHash})

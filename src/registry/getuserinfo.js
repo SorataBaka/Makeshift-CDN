@@ -3,14 +3,14 @@ const userData = require(__dirname + '/../../schema/userInfo.js')
 
 
 module.exports = async(req, res) =>{
-    const { headers } = req
-    const username = headers.username
-    const password = headers.password
+    const { body } = req
+    const username = body.username
+    const password = body.password
     if(!username || !password){
         res.status = 400
         return res.json({
             Status: 400,
-            Message : "Invalid headers"
+            Message : "Invalid body"
         })
     }
 

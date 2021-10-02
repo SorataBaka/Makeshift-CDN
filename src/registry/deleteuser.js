@@ -5,18 +5,18 @@ const userData = require(__dirname + `/../../schema/userInfo.js`)
 const fs = require("fs")
 const path = require("path")
 module.exports = async(req, res) =>{
-    const { headers } = req
-    if(!headers.username || !headers.password){
+    const { body } = req
+    if(!body.username || !body.password){
         res.status = 401
         return res.json({
             Status: 401,
-            Message: "Insufficient headers",
+            Message: "Insufficient body content",
             Description: " Please provide a username header and password header"
         })
     }
 
-    const username = headers.username
-    const password = headers.password
+    const username = body.username
+    const password = body.password
     const userEncrypted = await encryptUser(username)
 
     const dataQuery = await userData.find({username: userEncrypted})

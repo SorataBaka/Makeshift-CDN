@@ -10,7 +10,6 @@ module.exports = async(req, res)=>{
       Message: "No file provided"
     })
   }
-  const { params } = req
   const { headers } = req
   const token = headers.token
   const fileName = req.file.originalname

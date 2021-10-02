@@ -11,15 +11,15 @@ const fs = require("fs")
 const path = require("path")
 const {encryptPassword, encryptUser} = require(__dirname + "/../../utils/encryption.js")
 module.exports = async(req, res) =>{
-    const { headers } = req
+    const { body } = req
     //verify if user provided a username and password
-    if(!headers.username || !headers.password) return res.json({
+    if(!body.username || !body.password) return res.json({
         Status: 401,
-        Message: "Insufficient headers",
-        Description: " Please provide a username header and password header"
+        Message: "Insufficient body content",
+        Description: " Please provide a username and password body"
     })
-    const username = headers.username
-    const password = headers.password
+    const username = body.username
+    const password = body.password
     const userEncrypted = await encryptUser(username)
     const passwordEncrypted = await encryptPassword(password)
     //verify if username already exists
