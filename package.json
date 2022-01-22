@@ -30,7 +30,7 @@
     "mongoose": "^6.0.7",
     "morgan": "^1.10.0",
     "multer": "^1.4.3",
-    "nanoid": "^3.1.27",
+    "nanoid": "^3.1.31",
     "path": "^0.12.7"
   },
   "repository": {
